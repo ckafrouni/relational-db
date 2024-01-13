@@ -1,33 +1,19 @@
-use relational_db::{Column, DataType, Database, Table};
+use std::collections::HashMap;
 
-pub struct Person;
-
-impl Table for Person {
-    fn name(&self) -> String {
-        "person".to_string()
-    }
-
-    fn columns(&self) -> Vec<Column> {
-        vec![
-            Column {
-                pk: true,
-                name: "id".to_string(),
-                data_type: DataType::Number,
-            },
-            Column {
-                name: "id".to_string(),
-                data_type: DataType::Number,
-            },
-            Column {
-                name: "name".to_string(),
-                data_type: DataType::String,
-            },
-        ]
-    }
-}
+use relational_db::{DataType, Database};
 
 fn main() {
-    let db = Database::new();
+    let mut db = Database::new();
 
-    db.create_table::<Person>();
+    db.create_table("person".into(), {
+        let mut fields = HashMap::new();
+        fields.insert("name".to_string(), DataType::String);
+        fields.insert("age".to_string(), DataType::Number);
+        fields
+    });
+
+    let table = db.get_table("person").unwrap();
+
+    println!("table: {:?}", table);
+    println!("table: {:#?}", table);
 }

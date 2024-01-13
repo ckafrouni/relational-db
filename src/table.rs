@@ -1,9 +1,21 @@
-use super::Column;
+use std::collections::HashMap;
 
-pub trait Table {
-    fn name(&self) -> &str;
-    fn columns(&self) -> Vec<Box<dyn Column>>;
-    fn pk(&self) -> Option<Box<dyn Column>> {
-        None
+use super::{Column, DataType};
+
+#[derive(Debug)]
+pub struct Table {
+    pub name: String,
+    pub columns: Vec<Column>,
+}
+
+impl Table {
+    pub fn new(name: String, fields: HashMap<String, DataType>) -> Self {
+        Self {
+            name,
+            columns: fields
+                .into_iter()
+                .map(|(name, data_type)| Column::new(name, data_type))
+                .collect(),
+        }
     }
 }
