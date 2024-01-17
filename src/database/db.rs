@@ -14,6 +14,7 @@ impl Default for Database {
 }
 
 impl Database {
+    #[allow(unused)]
     pub fn execute(&mut self, query: Query) -> Result<TableSlice, DatabaseError> {
         todo!("execute")
     }
