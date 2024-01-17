@@ -1,7 +1,6 @@
 use crate::errors::QueryBuilderError;
 
-#[derive(Debug)]
-pub struct SelectQuery {}
+use super::Query;
 
 /* #region States */
 #[derive(Debug, Default)]
@@ -21,16 +20,18 @@ pub struct SelectQB<T, F> {
     fields: F,
 }
 
-impl SelectQB<FromTable, Fields> {
-    pub fn build(self) -> Result<SelectQuery, QueryBuilderError> {
-        println!("{:#?}", self);
-        todo!("build")
-    }
-}
-
 impl SelectQB<NoFromTable, NoFields> {
     pub fn new() -> Self {
         Self::default()
+    }
+}
+
+impl SelectQB<FromTable, Fields> {
+    pub fn build(self) -> Result<Query, QueryBuilderError> {
+        Ok(Query::Select {
+            from_table: self.from_table.0,
+            fields: self.fields.0,
+        })
     }
 }
 

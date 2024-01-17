@@ -9,13 +9,14 @@ pub type TableSlice = HashMap<String, Vec<String>>;
 
 impl Default for Database {
     fn default() -> Self {
-        todo!("default database creation")
+        Self {}
     }
 }
 
 impl Database {
     #[allow(unused)]
-    pub fn execute(&mut self, query: Query) -> Result<TableSlice, DatabaseError> {
-        todo!("execute")
+    pub fn execute(&mut self, query: impl Into<Query>) -> Result<TableSlice, DatabaseError> {
+        println!("executing query: {:#?}", query.into());
+        Ok(TableSlice::new())
     }
 }

@@ -1,7 +1,6 @@
 use crate::errors::QueryBuilderError;
 
-#[derive(Debug)]
-pub struct InsertIntoQuery {}
+use super::Query;
 
 /* #region States */
 #[derive(Debug, Default)]
@@ -17,7 +16,7 @@ pub struct Fields(Vec<String>);
 #[derive(Debug, Default)]
 pub struct NoValues;
 #[derive(Debug, Default)]
-pub struct Values(Vec<String>);
+pub struct Values(Vec<Vec<String>>);
 /* #endregion */
 
 #[derive(Debug, Default)]
@@ -34,9 +33,12 @@ impl InsertIntoQB<NoName, NoFields, NoValues> {
 }
 
 impl InsertIntoQB<Name, Fields, Values> {
-    pub fn build(self) -> Result<InsertIntoQuery, QueryBuilderError> {
-        println!("{:#?}", self);
-        todo!("build")
+    pub fn build(self) -> Result<Query, QueryBuilderError> {
+        Ok(Query::InsertInto {
+            name: self.name.0,
+            fields: self.fields.0,
+            values: self.values.0,
+        })
     }
 }
 
@@ -45,7 +47,7 @@ impl<N, F> InsertIntoQB<N, F, NoValues> {
         InsertIntoQB {
             name: self.name,
             fields: self.fields,
-            values: Values(value.as_ref().iter().map(|s| s.to_string()).collect()),
+            values: Values(vec![value.as_ref().iter().map(|s| s.to_string()).collect()]),
         }
     }
 }
