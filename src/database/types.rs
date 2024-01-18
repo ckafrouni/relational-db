@@ -12,3 +12,25 @@ impl std::fmt::Display for DataType {
         }
     }
 }
+
+#[derive(Debug, Clone)]
+pub enum DataValue {
+    Integer(i32),
+    String(String),
+}
+
+#[derive(Debug, Clone)]
+pub struct ColumnHeader {
+    pub name: String,
+    pub data_type: DataType,
+}
+
+pub type Row = Vec<DataValue>;
+
+#[derive(Debug, Clone)]
+pub enum ColumnOption {
+    PK,
+    AutoIncrement,
+    NotNull,
+    Unique,
+}

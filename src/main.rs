@@ -13,14 +13,20 @@ fn main() -> Result<(), Error> {
 
     let create_query = CreateTableQB::new()
         .name("user")
-        .column("id", DataType::Integer)
-        .column("name", DataType::String)
-        .column("age", DataType::Integer)
-        .column("email", DataType::String)
-        .column("password", DataType::String)
+        .column(
+            "id",
+            DataType::Integer,
+            [ColumnOption::PK, ColumnOption::AutoIncrement],
+        )
+        .column("name", DataType::String, [ColumnOption::NotNull])
+        .column("age", DataType::Integer, [])
+        .column("email", DataType::String, [ColumnOption::Unique])
+        .column("password", DataType::String, [ColumnOption::NotNull])
         .build()?;
 
     db.execute(create_query)?;
+
+    println!("{:#?}", db);
 
     let insert_one_query = InsertIntoQB::new()
         .name("user")
@@ -29,6 +35,8 @@ fn main() -> Result<(), Error> {
         .build()?;
 
     db.execute(insert_one_query)?;
+
+    println!("{:#?}", db);
 
     let insert_many_query = InsertIntoQB::new()
         .name("user")

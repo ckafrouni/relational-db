@@ -5,6 +5,10 @@ pub enum DatabaseError {
     TableNotFound(String),
     ColumnNotFound(String),
     InvalidDataType { column: String, data_type: String },
+    PkAlreadySet,
+    PkAlreadyExists,
+    FieldsValuesMismatch,
+    DataTypeMismatch,
 }
 
 impl From<std::io::Error> for DatabaseError {

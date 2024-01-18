@@ -6,18 +6,13 @@ pub use create_table::CreateTableQB;
 pub use insert_into::InsertIntoQB;
 pub use select::SelectQB;
 
-use crate::database::DataType;
-
-#[derive(Debug, Clone)]
-pub struct ColumnHeader {
-    pub name: String,
-    pub data_type: DataType,
-}
+use crate::database::ColumnHeader;
 
 #[derive(Debug, Clone)]
 pub enum Query {
     CreateTable {
         name: String,
+        pk: Option<String>,
         columns: Vec<ColumnHeader>,
     },
     InsertInto {
