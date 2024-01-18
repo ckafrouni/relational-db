@@ -8,13 +8,13 @@ pub use select::SelectQB;
 
 use crate::database::DataType;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct ColumnHeader {
     pub name: String,
     pub data_type: DataType,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum Query {
     CreateTable {
         name: String,

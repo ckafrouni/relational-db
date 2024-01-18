@@ -41,7 +41,7 @@ fn main() -> Result<(), Error> {
 
     let select_query = SelectQB::new()
         .from("user")
-        .fields(["id", "name", "age", "email"])
+        .fields(["id", "name"])
         .build()?;
 
     let res = db.execute(select_query)?;

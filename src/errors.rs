@@ -1,6 +1,10 @@
 #[derive(Debug)]
 pub enum DatabaseError {
     QueryError(String),
+    TableAlreadyExists(String),
+    TableNotFound(String),
+    ColumnNotFound(String),
+    InvalidDataType { column: String, data_type: String },
 }
 
 impl From<std::io::Error> for DatabaseError {
